@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "@serverless-cd/checkout": "^0.0.9",
+    "@serverless-cd/engine": "^0.0.28"
+  }
+}

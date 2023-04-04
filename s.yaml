@@ -1,0 +1,68 @@
+edition: 1.0.0
+name: hello-world-app
+access: "default_serverless_devs_access"
+
+vars: # 全局变量
+  region: "cn-shenzhen"
+  service:
+    name: "assembly-line"
+    description: 'hello world by serverless devs'
+    logConfig: auto
+
+
+services:
+  gateway:
+    component: fc
+    props:
+      region: ${vars.region}
+      service: ${vars.service}
+      function:
+        name: "gateway"
+        description: 'hello world by serverless devs'
+        runtime: nodejs16
+        codeUri: ./gateway
+        handler: index.handler
+        memorySize: 128
+        timeout: 20
+        instanceConcurrency: 128
+        environmentVariables:
+          WEBHOOK_PASSWORD: wss
+          REF: main
+          TOKEN: ${env.token}
+      triggers:
+        - name: httpTrigger
+          type: http
+          config:
+            authType: anonymous
+            methods:
+              - GET
+              - POST
+              - OPTIONS
+  engine:
+    component: fc
+    actions:
+      pre-deploy:
+        - run: npm install --registry=https://registry.npmmirror.com
+          path: './engine'
+      post-deploy:
+        - component: fc api UpdateFunction --region ${vars.region} --header
+            '{"x-fc-disable-container-reuse":"True"}' --path
+            '{"serviceName":"${vars.service.name}","functionName":"engine"}'
+    props:
+      region: ${vars.region}
+      service: ${vars.service}
+      function:
+        name: "engine"
+        description: 'hello world by serverless devs'
+        runtime: nodejs16
+        codeUri: ./engine
+        handler: index.handler
+        memorySize: 640
+        timeout: 600
+        layers:
+          - acs:fc:cn-shenzhen:1740298130743624:layers/dumiAndS/versions/5
+        environmentVariables:
+          PATH: /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/var/fc/lang/nodejs16_alinode/bin:/opt/bin:/opt/nodejs/node_modules/.bin:/opt/nodejs/node_modules
+        asyncConfiguration:
+          maxAsyncRetryAttempts: 1
+          statefulInvocation: true
