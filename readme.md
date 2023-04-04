@@ -39,4 +39,4 @@ s cli fc layer publish --code ./my-layer-code.zip --compatible-runtime nodejs16,
 
 在创建层或者创建版本时 `层上传方式`选择`在线构建`,填入依赖确定就好了。
 
-然后将输出的 arn 填写到配置中
+然后将输出的 arn 填写到配置中，环境变量加上 `/opt/nodejs/node_modules/.bin:/opt/nodejs/node_modules`。

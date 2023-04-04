@@ -26,9 +26,8 @@ services:
         timeout: 20
         instanceConcurrency: 128
         environmentVariables:
-          WEBHOOK_PASSWORD: wss
+          WEBHOOK_PASSWORD: ${env.password}
           REF: main
-          TOKEN: ${env.token}
       triggers:
         - name: httpTrigger
           type: http
@@ -66,3 +65,4 @@ services:
         asyncConfiguration:
           maxAsyncRetryAttempts: 1
           statefulInvocation: true
+          TOKEN: ${env.token}
