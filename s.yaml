@@ -1,6 +1,7 @@
 edition: 1.0.0
 name: hello-world-app
 access: "default_serverless_devs_access"
+# access: wss-root
 
 vars: # 全局变量
   region: "cn-shenzhen"
@@ -8,7 +9,7 @@ vars: # 全局变量
     name: "assembly-line"
     description: 'hello world by serverless devs'
     logConfig: auto
-
+    role: acs:ram::1899690531354629:role/aliyunfcdefaultrole
 
 services:
   gateway:
@@ -59,10 +60,10 @@ services:
         memorySize: 640
         timeout: 600
         layers:
-          - acs:fc:cn-shenzhen:1740298130743624:layers/dumiAndS/versions/5
+          - acs:fc:${vars.region}:1899690531354629:layers/s-dumi/versions/1
         environmentVariables:
           PATH: /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/var/fc/lang/nodejs16_alinode/bin:/opt/bin:/opt/nodejs/node_modules/.bin:/opt/nodejs/node_modules
+          TOKEN: ${env.token}
         asyncConfiguration:
           maxAsyncRetryAttempts: 1
           statefulInvocation: true
-          TOKEN: ${env.token}

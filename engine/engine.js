@@ -21,11 +21,12 @@ async function handler(body, callback) {
         };
         await checkout(payload); // 下载代码
         logger.info('checkout success');
+        const { FC_ACCOUNT_ID, ALIBABA_CLOUD_ACCESS_KEY_ID, ALIBABA_CLOUD_ACCESS_KEY_SECRET, ALIBABA_CLOUD_SECURITY_TOKEN } = process.env;
         const steps = [ // 流水线需要运行的命令
           // { run: 'npm install --registry=https://registry.npmmirror.com' },
           { run: 'npm run build' },
-          // { run: 'npm install -g @serverless-devs/s --registry=https://registry.npmmirror.com' },
-          // { run: 's deploy function --use-local -y' },
+          { run: `s config add --AccountID ${FC_ACCOUNT_ID} --SecurityToken ${ALIBABA_CLOUD_SECURITY_TOKEN} --AccessKeyID ${ALIBABA_CLOUD_ACCESS_KEY_ID} --AccessKeySecret ${ALIBABA_CLOUD_ACCESS_KEY_SECRET} -a default -f` },
+          { run: 's deploy --use-local -y' },
         ]
         return { steps };
       },
