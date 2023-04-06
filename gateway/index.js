@@ -48,6 +48,7 @@ exports.handler = async (req, resp, context) => {
     securityToken: ALIBABA_CLOUD_SECURITY_TOKEN,
     region: FC_REGION,
     timeout: 60 * 1000,
+    internal: true,
   });
   const taskId = randomString(32);
   const payload = {
