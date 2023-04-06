@@ -7,7 +7,7 @@ async function handler(body, callback) {
   const engine = new Engine({
     cwd: cwdPath, // 代码下载的目录
     logConfig: {
-      // logPrefix: '/mnt/auto/cd_logs',
+      logPrefix: '/tmp',
       // logLevel: 'debug',
     },
     inputs: {},
