@@ -34,7 +34,7 @@ exports.handler = async (req, resp, context) => {
     return resp.send(Result.ofError('分支验证不通过'));
   }
   const {
-    before: commit,
+    after: commit,
     user_name: owner,
     project: { clone_url }
   } = body;
