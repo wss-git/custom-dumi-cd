@@ -25,7 +25,7 @@ async function handler(body, callback) {
         const steps = [ // 流水线需要运行的命令
           // { run: 'npm install --registry=https://registry.npmmirror.com' },
           { run: 'npm run build' },
-          { run: `s config add --AccountID ${FC_ACCOUNT_ID} --SecurityToken ${ALIBABA_CLOUD_SECURITY_TOKEN} --AccessKeyID ${ALIBABA_CLOUD_ACCESS_KEY_ID} --AccessKeySecret ${ALIBABA_CLOUD_ACCESS_KEY_SECRET} -a default -f` },
+          { run: `s config add --AccountID ${FC_ACCOUNT_ID} --SecurityToken ${ALIBABA_CLOUD_SECURITY_TOKEN} --AccessKeyID ${ALIBABA_CLOUD_ACCESS_KEY_ID} --AccessKeySecret ${ALIBABA_CLOUD_ACCESS_KEY_SECRET} -a wss-root -f` },
           { run: 's deploy --use-local -y' },
         ]
         return { steps };
