@@ -26,7 +26,7 @@ async function handler(body, callback) {
           // { run: 'npm install --registry=https://registry.npmmirror.com' },
           { run: 'npm run build' },
           { run: `s config add --AccountID ${FC_ACCOUNT_ID} --SecurityToken ${ALIBABA_CLOUD_SECURITY_TOKEN} --AccessKeyID ${ALIBABA_CLOUD_ACCESS_KEY_ID} --AccessKeySecret ${ALIBABA_CLOUD_ACCESS_KEY_SECRET} -a wss-root -f` },
-          { run: 's deploy --use-local -y' },
+          { run: 's deploy --use-local -y -a wss-root' },
         ]
         return { steps };
       },
